@@ -1,0 +1,1 @@
+export const private_key = '1234'
