@@ -1,1 +1,2 @@
-export const private_key = '1234'
+const private_key = "jnhibgbknihn";
+module.exports = private_key;
