@@ -9,6 +9,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const validateId = (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ 
+            message: `L'identifiant "${req.params.id}" n'est pas un format valide.` 
+        });
+    }
+    next();
+};
+
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB Atlas!'))
@@ -35,10 +44,10 @@ const {
 } = require('./src/routes/pokemon-route');
 
 app.get('/api/pokemons', findAllPokemons);
-app.get('/api/pokemons/:id', findPokemonByPk);
+app.get('/api/pokemons/:id', validateId, findPokemonByPk);
 app.post('/api/pokemons', createPokemon);
-app.put('/api/pokemons/:id', updatePokemon);
-app.delete('/api/pokemons/:id', deletePokemon);
+app.put('/api/pokemons/:id', validateId, updatePokemon);
+app.delete('/api/pokemons/:id', validateId, deletePokemon);
 
 app.use((req, res) => {
     res.status(404).json({ message: 'notfound' });
