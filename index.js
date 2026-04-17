@@ -24,7 +24,9 @@ mongoose
     .catch((err) => console.log('Connection failed', err));
 
 const { createFirstUser } = require('./src/db/create-first-user');
+const { seedPokemons } = require('./src/db/seed-pokemons');
 createFirstUser();
+seedPokemons();
 
 // Login (accessible sans token)
 const { userLogin } = require('./src/routes/user-route');
