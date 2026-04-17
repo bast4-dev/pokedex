@@ -18,7 +18,7 @@ const authMiddleware = (req, res, next) => {
         }
 
         const userId = decodedToken.idUser;
-        if (req.body.userId && req.body.userId !== userId) {
+        if (req.body && req.body.userId && req.body.userId !== userId) {
             const message = "L'identifiant de l'utilisateur est invalide.";
             return res.status(401).json({ message });
         }
